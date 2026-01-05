@@ -1,0 +1,2 @@
+[OK] testlab setup done.
+BASE=/srv/testlab, GROUP=testlab, USERS=runner analyst

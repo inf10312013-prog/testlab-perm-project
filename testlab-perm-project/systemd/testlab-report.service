@@ -1,0 +1,11 @@
+[Unit]
+Description=TestLab Report Generator
+After=network.target
+
+[Service]
+Type=oneshot
+User=runner
+Group=testlab
+WorkingDirectory=/srv/testlab
+UMask=0002
+ExecStart=/usr/local/bin/testlab_run_report.sh

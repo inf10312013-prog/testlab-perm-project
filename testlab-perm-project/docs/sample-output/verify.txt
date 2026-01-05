@@ -1,0 +1,48 @@
+==[1] Check directories & setgid ==
+drwxrwsr-x+ 4 root testlab 4096 Jan  4 08:44 /srv/testlab
+drwxrwsr-x+ 2 root testlab 4096 Jan  4 08:44 /srv/testlab/logs
+drwxrwsr-x+ 2 root testlab 4096 Jan  4 08:44 /srv/testlab/reports
+
+==[2] Check ACL defaults (should include default:group::rwX) ==
+# file: /srv/testlab/logs
+# owner: root
+# group: testlab
+# flags: -s-
+user::rwx
+group::rwx
+other::r-x
+default:user::rwx
+default:group::rwx
+default:other::r-x
+
+# file: /srv/testlab/reports
+# owner: root
+# group: testlab
+# flags: -s-
+user::rwx
+group::rwx
+other::r-x
+default:user::rwx
+default:group::rwx
+default:other::r-x
+
+
+==[3] Check users are in group testlab ==
+uid=1001(runner) gid=1002(runner) groups=1002(runner),1001(testlab)
+uid=1002(analyst) gid=1003(analyst) groups=1003(analyst),1001(testlab)
+
+==[4] Shared write test (runner creates, analyst appends) ==
+k,v
+1,OK
+
+==[5] Permissions of generated file ==
+-rw-rw-r-- 1 runner testlab 9 Jan  4 08:44 /srv/testlab/reports/verify.csv
+# file: /srv/testlab/reports/verify.csv
+# owner: runner
+# group: testlab
+user::rw-
+group::rw-
+other::r--
+
+
+[OK] verify passed.
